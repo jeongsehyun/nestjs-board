@@ -3,8 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   UsePipes,
@@ -24,8 +24,13 @@ export class BoardsController {
   }
 
   @Get('/:id')
-  getBoardById(@Param('id', ParseIntPipe) id: string): Board {
-    return this.boardService.getBoardById(id);
+  getBoardById(@Param('id') id: string): Board {
+    const found = this.boardService.getBoardById(id);
+    if (!found)
+      throw new NotFoundException(
+        `해당 ID(${id})를 가진 게시물을 찾을 수 없습니다.`,
+      );
+    return found;
   }
 
   @Post()
