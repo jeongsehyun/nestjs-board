@@ -6,13 +6,11 @@ export class BoardStatusValidationPipe implements PipeTransform {
 
   transform(value: any) {
     value = value.toUpperCase();
-
     if (!this.isStatusValid(value)) {
       throw new BadRequestException(
         `'${value}'는 게시글 상태값으로 사용할 수 없습니다.`,
       );
     }
-
     return value;
   }
 
